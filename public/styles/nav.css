@@ -1,0 +1,15 @@
+nav {
+  color: #FFFFFF;
+  width: 100%;
+  background-color: #4056A1;
+  height: 120px;
+  position: fixed;
+}
+#nav-logo-elm {
+  font-family: "Bungee", cursive;
+  padding: 1.5eml;
+}
+#nav-new-elm {
+  color: #ffffff;
+  text-decoration: none;
+}

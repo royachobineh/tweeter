@@ -1,0 +1,30 @@
+.r2 {
+  resize: none;
+  background-color: inherit;
+  padding: 10px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: solid;
+  border-color: teal;
+  margin: 20px;
+}
+.r3 {
+  display: flex;
+  justify-content: center;
+  flex-direction: row-reverse;
+  font-family: "Bungee", cursive;
+}
+.r3r1 {
+  flex-grow: 0.25;
+  order: 1;
+  background-color: #4056A1;
+  color: #ffffff;
+  border: none;
+}
+.r3r2 {
+  flex-grow: 4;
+  order: 0;
+  display: flex;
+  justify-content: flex-end;
+}
