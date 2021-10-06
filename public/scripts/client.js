@@ -6,6 +6,7 @@
 // Fake data taken from initial-tweets.json
 const data = [
   {
+    
     "user": {
       "name": "Newton",
       "avatars": "https://i.imgur.com/73hZDYK.png"
@@ -29,6 +30,15 @@ const data = [
   }
 ]
 $(function () {
+  
+  //Escape method to avoid XSS attacks
+  const escape = function (str) {
+    let div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  }
+
+
   const createTweetElement = function (tweet) {
     let tweetHTML = `
       <article class="tweets">
@@ -55,6 +65,18 @@ $(function () {
       return tweetHTML;
   }
 
+  const loadTweets = function () {
+    $.ajax({
+      url: '/tweets',
+      method: 'GET'
+    })
+      .done((tweets) => {
+        renderTweets(tweets)
+      })
+      .fail(() => console.log('An error has occurred'))
+      .always(() => console.log('Succesful request'));
+  }
+
   const renderTweets = function (tweets) {
     $('#tweets').empty();
 
@@ -65,25 +87,35 @@ $(function () {
     }
   }
 
+  $('#new-tweet-form').on('submit', function (event) {
+    event.preventDefault();
 
+    const $tweetText = $(this).children('#tweet-text');
 
+    if ($tweetText.val().length > 140) {
+      $('.error').html(`<p>Please respect the 140 character limit</p>`);
+      $('.error').slideDown('slow');
+      return;
+    } else if ($tweetText.val().length === 0) {
+      $('.error').html(`<p>Please write something!</p>`);
+      $('.error').slideDown('slow');
+      return;
+    }
+    const formContent = $(this).serialize();
 
+    $.ajax({
+      url: '/tweets',
+      method: 'POST',
+      data: formContent
+    })
+    .done(() => loadTweets())
+    .fail(() => console.log("Something went wrong!"))
+    .always(() => console.log("Successfull"));
 
+    $("#tweet-text").val("");
+    $(this).find('counter').val('140');
+  });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  loadTweets();
 })
 
