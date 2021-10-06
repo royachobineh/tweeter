@@ -1,11 +1,9 @@
-.header-image {
+header { 
   height: 400px;
-  width: 100%;
-  background-color: #9797d9;
-  background-image: url("https://www.transparenttextures.com/patterns/dark-tire.png");
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-  margin-top: 100px;
-}
+  background-image: url('../images/asfalt-dark.png');
+  background-color: #9797d9;
+} 
