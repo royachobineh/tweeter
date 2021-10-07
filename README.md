@@ -15,3 +15,15 @@ This repository is the starter code for the project: Students will fork and clon
 
 - Express
 - Node 5.10.x or above
+
+## Final Product 
+
+!["Screenshot of "](https://github.com/royachobineh/tweeter/blob/master/docs/main.png)
+
+
+!["Screenshot ](https://github.com/royachobineh/tweeter/blob/master/docs/second.png)
+
+## Contact
+
+- In the situation that you are facing problems starting up the application please contact me at roya.chbn@gmail.com
+
