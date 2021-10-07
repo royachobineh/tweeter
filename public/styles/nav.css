@@ -1,7 +1,8 @@
 nav {
   height: 60px;
   width: 100%;
-  background-color: #4056A1;
+  background-image: url('../images/cutcube.png');
+  background-color: #b5d6d6;
   color: #ffffff;
   display: flex;
   justify-content: space-between;
@@ -21,6 +22,7 @@ nav span {
   flex-direction: column;
   align-items: center;
   margin: 1.5em;
+  margin-right: 2%;
 }
 
 #writeNewText * {
@@ -30,4 +32,22 @@ nav span {
 
 #writeNewText i {
   margin-top: 3px;
+}
+
+#writeNewText:hover {
+  transition: transform 0.2s;
+  transform: scale(1.2);
+}
+
+#arrow-down {
+  color: red;
+  animation-name: bounce;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes bounce {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(3px); }
+  100% { transform: translateY(0); }
 }

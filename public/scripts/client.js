@@ -3,42 +3,52 @@
  * jQuery is already loaded
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
-// Fake data taken from initial-tweets.json
-const data = [
-  {
-    
-    "user": {
-      "name": "Newton",
-      "avatars": "https://i.imgur.com/73hZDYK.png"
-      ,
-      "handle": "@SirIsaac"
-    },
-    "content": {
-      "text": "If I have seen further it is by standing on the shoulders of giants"
-    },
-    "created_at": 1461116232227
-  },
-  {
-    "user": {
-      "name": "Descartes",
-      "avatars": "https://i.imgur.com/nlhLi3I.png",
-      "handle": "@rd" },
-    "content": {
-      "text": "Je pense , donc je suis"
-    },
-    "created_at": 1461113959088
-  }
-]
+
+
+
 $(function () {
-  
+
   //Escape method to avoid XSS attacks
   const escape = function (str) {
     let div = document.createElement('div');
     div.appendChild(document.createTextNode(str));
     return div.innerHTML;
   }
+  
+  //function to open/close the text area
+  const openTextArea = function (boolForScroll=false) {
+    if ($('.new-tweet').is(':hidden') || boolForScroll) {
+      $('.new-tweet').slideDown('slow', () => {
+        $('#tweet-text').focus();
+      });
+    } else {
+      $('.new-tweet').slideUp('slow');
+    }
+  }
 
+  /*if the user scrolls to/away from the top of the 
+  page show/hide the return-to-home button */
+  $(window).on('scroll', function () {
+    if ($(this).scrollTop()) {
+      $('#return-to-home').fadeIn();
+    } else {
+      $('#return-to-home').fadeOut();
+    }
+  })
 
+  
+  //return to home on click method
+  $('#return-to-home').on('click', function () {
+    $("html, body").animate({ scrollTop: 0 }, 500, function () { });
+    openTextArea(true);
+  })
+
+  //write new text on click 
+  $('#writeNewText').on('click', function (event) {
+    openTextArea();
+  })
+
+  //function to create tweet elements
   const createTweetElement = function (tweet) {
     let tweetHTML = `
       <article class="tweets">
@@ -62,7 +72,8 @@ $(function () {
           </footer>
         </article>
       `;
-      return tweetHTML;
+
+    return tweetHTML;
   }
 
   const loadTweets = function () {
@@ -77,6 +88,7 @@ $(function () {
       .always(() => console.log('Succesful request'));
   }
 
+  //goes through tweets array and dynamically generates html
   const renderTweets = function (tweets) {
     $('#tweets').empty();
 
@@ -87,6 +99,8 @@ $(function () {
     }
   }
 
+  
+  //tweet creation method
   $('#new-tweet-form').on('submit', function (event) {
     event.preventDefault();
 
@@ -97,10 +111,11 @@ $(function () {
       $('.error').slideDown('slow');
       return;
     } else if ($tweetText.val().length === 0) {
-      $('.error').html(`<p>Please write something!</p>`);
+      $('.error').html(`<p>Please have something to tweet :D</p>`);
       $('.error').slideDown('slow');
-      return;
+      return
     }
+
     const formContent = $(this).serialize();
 
     $.ajax({
@@ -108,14 +123,14 @@ $(function () {
       method: 'POST',
       data: formContent
     })
-    .done(() => loadTweets())
-    .fail(() => console.log("Something went wrong!"))
-    .always(() => console.log("Successfull"));
+      .done(() => loadTweets())
+      .fail(() => console.log("Something went wrong"))
+      .always(() => console.log("SUCCESS BAYBEE"));
 
     $("#tweet-text").val("");
-    $(this).find('counter').val('140');
+    $(this).find('.counter').val('140');
+
   });
 
   loadTweets();
 })
-
